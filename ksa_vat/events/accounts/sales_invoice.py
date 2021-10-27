@@ -6,7 +6,19 @@ import io
 import os
 import json
 
-def create_qr_code(doc, method):
+def create_qr_codes(doc,method):
+	create_summary_qr_code(doc,method)
+	create_detailed_qr_code(doc,method,field='detailed_invoice_qr_code')
+
+def create_detailed_qr_code(doc,method,field):
+	print_format = "KSA VAT Format"
+	create_qr_code(doc,method,print_format,field)
+
+def create_summary_qr_code(doc,method):
+	print_format = "Simplified VAT Invoice"
+	create_qr_code(doc,method,print_format)
+
+def create_qr_code(doc, method,print_format=None,qr_field="qr_code"):
 	"""Create QR Code after inserting Sales Inv
 	"""
 
@@ -15,18 +27,18 @@ def create_qr_code(doc, method):
 		return
 
 	# if QR Code field not present, do nothing
-	if not hasattr(doc, 'qr_code'):
+	if not hasattr(doc, qr_field):
 		return
 
 	# Don't create QR Code if it already exists
-	qr_code = doc.get("qr_code")
+	qr_code = doc.get(qr_field)
 	if qr_code and frappe.db.exists({"doctype": "File", "file_url": qr_code}):
 		return
 
 	fields = frappe.get_meta('Sales Invoice').fields
 	
 	for field in fields:
-		if field.fieldname == 'qr_code' and field.fieldtype == 'Attach Image':
+		if field.fieldname == qr_field and field.fieldtype == 'Attach Image':
 			# Creating public url to print format
 			default_print_format = frappe.db.get_value('Property Setter', dict(property='default_print_format', doc_type=doc.doctype), "value")
 			
@@ -34,14 +46,14 @@ def create_qr_code(doc, method):
 			language = frappe.get_system_settings('language')
 			
 			# creating qr code for the url
-			url = f"{ frappe.utils.get_url() }/{ doc.doctype }/{ doc.name }?format={ default_print_format or 'Standard' }&_lang={ language }&key={ doc.get_signature() }"
+			url = f"{ frappe.utils.get_url() }/{ doc.doctype }/{ doc.name }?format={ print_format or default_print_format or 'Standard' }&_lang={ language }&key={ doc.get_signature() }"
 			url = url.replace(" ", "%20")
 			qr_image = io.BytesIO()
 			url = qr_create(url, error='L', encoding='utf-8')
 			url.png(qr_image, scale=2, quiet_zone=1)
 			
 			# making file
-			filename = f"QR-CODE-{doc.name}.png".replace(os.path.sep, "__")
+			filename = f"QR-CODE-{doc.name}-detailed.png".replace(os.path.sep, "__")
 			_file = frappe.get_doc({
 				"doctype": "File",
 				"file_name": filename,
@@ -52,7 +64,7 @@ def create_qr_code(doc, method):
 			_file.save()
 
 			# assigning to document
-			doc.db_set('qr_code', _file.file_url)
+			doc.db_set(qr_field, _file.file_url)
 			doc.notify_update()
 
 			break
@@ -67,11 +79,14 @@ def delete_qr_code_file(doc, method):
 	if region not in ['Saudi Arabia']:
 		return
 
-	if hasattr(doc, 'qr_code') and doc.get('qr_code'):
-		file_doc = frappe.get_list('File', {
-			'file_url': doc.qr_code,
-			'attached_to_doctype': doc.doctype,
-			'attached_to_name': doc.name
-		})
-		if len(file_doc):
-			frappe.delete_doc('File', file_doc[0].name)
+	qr_code_fields = ['qr_code','detailed_invoice_qr_code']
+
+	for field in qr_code_fields:
+		if hasattr(doc, field) and doc.get(field):
+			file_doc = frappe.get_list('File', {
+				'file_url': doc.get('field'),
+				'attached_to_doctype': doc.doctype,
+				'attached_to_name': doc.name
+			})
+			if len(file_doc):
+				frappe.delete_doc('File', file_doc[0].name)

@@ -1,0 +1,18 @@
+[
+ {
+  "content": "{% if doc.detailed_invoice_qr_code and has_access(doc.detailed_invoice_qr_code) %} \n    <img src=\"{{doc.detailed_invoice_qr_code}}\">\n{% endif %}",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Letter Head",
+  "footer": null,
+  "image": null,
+  "is_default": 1,
+  "letter_head_name": "Invoice QR Code",
+  "modified": "2021-10-27 13:26:55.157150",
+  "name": "Invoice QR Code",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "source": "HTML"
+ }
+]
