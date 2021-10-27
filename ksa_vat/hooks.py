@@ -185,6 +185,14 @@ fixtures = [
                 'Address-address_in_arabic',
             ]]
         }
+    },
+    {
+        'dt': 'Letter Head',
+        'filters': {
+            'name': ['in',[
+                'Invoice QR Code'
+            ]]
+        }
     }
 ]
 
