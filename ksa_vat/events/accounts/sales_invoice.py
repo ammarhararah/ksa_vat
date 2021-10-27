@@ -67,12 +67,11 @@ def delete_qr_code_file(doc, method):
 	if region not in ['Saudi Arabia']:
 		return
 
-	if hasattr(doc, 'qr_code'):
-		if doc.get('qr_code'):
-			file_doc = frappe.get_list('File', {
-				'file_url': doc.qr_code,
-				'attached_to_doctype': doc.doctype,
-				'attached_to_name': doc.name
-			})
-			if len(file_doc):
-				frappe.delete_doc('File', file_doc[0].name)
+	if hasattr(doc, 'qr_code') and doc.get('qr_code'):
+		file_doc = frappe.get_list('File', {
+			'file_url': doc.qr_code,
+			'attached_to_doctype': doc.doctype,
+			'attached_to_name': doc.name
+		})
+		if len(file_doc):
+			frappe.delete_doc('File', file_doc[0].name)
