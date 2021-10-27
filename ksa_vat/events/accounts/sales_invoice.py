@@ -53,7 +53,7 @@ def create_qr_code(doc, method,print_format=None,qr_field="qr_code"):
 			url.png(qr_image, scale=2, quiet_zone=1)
 			
 			# making file
-			filename = f"QR-CODE-{doc.name}-detailed.png".replace(os.path.sep, "__")
+			filename = f"QR-CODE-{doc.name}.png".replace(os.path.sep, "__")
 			_file = frappe.get_doc({
 				"doctype": "File",
 				"file_name": filename,

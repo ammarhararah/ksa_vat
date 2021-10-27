@@ -6,7 +6,7 @@
   "doctype": "Letter Head",
   "footer": null,
   "image": null,
-  "is_default": 1,
+  "is_default": 0,
   "letter_head_name": "Invoice QR Code",
   "modified": "2021-10-27 13:26:55.157150",
   "name": "Invoice QR Code",
