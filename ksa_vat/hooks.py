@@ -97,6 +97,10 @@ doc_events = {
         "on_submit": "ksa_vat.events.accounts.sales_invoice.create_qr_codes",
         "on_trash": "ksa_vat.events.accounts.sales_invoice.delete_qr_code_file"
     },
+    "Purchase Invoice":{
+        "on_submit": "ksa_vat.events.accounts.sales_invoice.create_qr_codes_purchase_invoice",
+        "on_trash": "ksa_vat.events.accounts.sales_invoice.delete_qr_code_file"
+    },
     "POS Invoice": {
         "on_submit": "ksa_vat.events.accounts.sales_invoice.create_pos_qr_code",
         "on_trash": "ksa_vat.events.accounts.sales_invoice.delete_qr_code_file"

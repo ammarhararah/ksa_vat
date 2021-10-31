@@ -7,15 +7,23 @@ import os
 import json
 
 def create_qr_codes(doc,method):
-	create_summary_qr_code(doc,method)
+	create_summary_qr_code(doc,method,print_format="Purchase Invoice Simplified")
 	create_detailed_qr_code(doc,method,field='detailed_invoice_qr_code')
 
-def create_detailed_qr_code(doc,method,field):
-	print_format = "KSA VAT Format"
+def create_qr_codes_purchase_invoice(doc,method):
+	create_summary_qr_code(doc,method,print_format="Purchase Invoice Simplified")
+	create_detailed_qr_code(doc,method,field='detailed_invoice_qr_code',print_format='Purchase Invoice Detailed')
+
+def create_detailed_qr_code(doc,method,field,print_format=None):
+	if not print_format:
+		print_format = "KSA VAT Format"
+		
 	create_qr_code(doc,method,print_format,field)
 
-def create_summary_qr_code(doc,method):
-	print_format = "Simplified VAT Invoice"
+def create_summary_qr_code(doc,method,print_format=None):
+	if not print_format:
+		print_format = "Simplified VAT Invoice"
+		
 	create_qr_code(doc,method,print_format)
 
 def create_pos_qr_code(doc,method):
