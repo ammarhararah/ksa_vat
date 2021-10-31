@@ -18,6 +18,11 @@ def create_summary_qr_code(doc,method):
 	print_format = "Simplified VAT Invoice"
 	create_qr_code(doc,method,print_format)
 
+def create_pos_qr_code(doc,method):
+	print_format = "POS Invoice SA"
+	create_qr_code(doc,method,print_format)
+
+
 def create_qr_code(doc, method,print_format=None,qr_field="qr_code"):
 	"""Create QR Code after inserting Sales Inv
 	"""
