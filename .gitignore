@@ -4,3 +4,5 @@
 *.swp
 tags
 ksa_vat/docs/current
+.history/
+ksa_vat/htmls/

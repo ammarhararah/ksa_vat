@@ -208,6 +208,7 @@ fixtures = [
 jenv = {
     'methods': [
         'string_to_json:ksa_vat.jinja.utils.string_to_json',
-        'has_access:ksa_vat.jinja.utils.has_access'
+        'has_access:ksa_vat.jinja.utils.has_access',
+        'get_company_logo:ksa_vat.jinja.utils.get_company_logo'
     ]
 }

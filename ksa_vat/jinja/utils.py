@@ -3,6 +3,13 @@ import json
 def string_to_json(json_string):
 	return json.loads(json_string)
 
+def get_company_logo(company):
+    import frappe
+    
+    company_logo = frappe.db.get_value("Company",company,'company_logo')
+    
+    return company_logo
+
 def has_access(file_url):
 	import frappe
 

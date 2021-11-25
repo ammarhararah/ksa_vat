@@ -1,14 +1,14 @@
 [
  {
-  "content": "{% if doc.detailed_invoice_qr_code and has_access(doc.detailed_invoice_qr_code) %} \n    <img src=\"{{doc.detailed_invoice_qr_code}}\">\n{% endif %}",
+  "content": "<style>\n    .print-format .letter-head .company-logo img{\n        float:right;\n        margin-left: 30px;\n        margin-right: 30px;\n    }\n    html[dir=\"rtl\"] .print-format .letter-head .company-logo img{\n        float:left;\n    }\n    .invoice-qr-code{\n        padding-left: 35px;\n        padding-right: 35px;\n    }\n</style>\n\n<div class=\"row\">\n    <div class=\"col-md-6 col-sm-6 col-xs-6 invoice-qr-code\">\n        {% if doc.detailed_invoice_qr_code and has_access(doc.detailed_invoice_qr_code) %} \n            <img src=\"{{doc.detailed_invoice_qr_code}}\">\n        {% endif %}\n    </div>\n    <div class=\"col-md-6 col-sm-6 col-xs-6 company-logo\">\n        {%if doc.get('company') and get_company_logo(doc.get('company')) %}\n             <img src=\"{{get_company_logo(doc.get('company'))}}\" style=\"max-width: 100px!important;\">\n        {%endif%}\n    </div>\n</div>\n",
   "disabled": 0,
   "docstatus": 0,
   "doctype": "Letter Head",
   "footer": null,
   "image": null,
-  "is_default": 0,
+  "is_default": 1,
   "letter_head_name": "Invoice QR Code",
-  "modified": "2021-10-27 13:26:55.157150",
+  "modified": "2021-11-25 12:37:11.496874",
   "name": "Invoice QR Code",
   "parent": null,
   "parentfield": null,
