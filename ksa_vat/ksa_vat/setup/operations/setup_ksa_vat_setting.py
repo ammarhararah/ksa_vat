@@ -8,7 +8,8 @@ def create_ksa_vat_setting(self, method):
     On creation of first company. Creates KSA VAT Setting"""
     # Validating if this is the first company for Saudi Arab
     company_list = frappe.get_all('Company', {
-        'country': 'Saudi Arabia'
+        'country': 'Saudi Arabia',
+        'name': self.name
     })
 
     ksa_vat_setting = frappe.get_all('KSA VAT Setting', {
