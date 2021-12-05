@@ -58,7 +58,7 @@ app_license = "MIT"
 
 # before_install = "ksa_vat.install.before_install"
 # after_install = "ksa_vat.install.after_install"
-
+after_migrate = "ksa_vat.ksa_vat.setup.operations.setup_ksa_vat_setting.make_custom_fields"
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config

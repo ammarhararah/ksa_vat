@@ -53,10 +53,15 @@ def create_ksa_vat_setting(self, method):
         ksa_vat_setting.save()
 
 def make_custom_fields():
-    qr_code_field = dict(
-        fieldname='qr_code', 
-        label='QR Code', 
-        fieldtype='Attach Image', 
-        read_only=1, no_copy=1, hidden=1)
+    doctypes_list = ["Sales Invoice","Purchase Invoice"]
+    qr_code_list = ['qr_code','qr_code_ar','detailed_invoice_qr_code','detailed_invoice_qr_code_ar']
     
-    create_custom_field('Sales Invoice', qr_code_field)
+    for doctype in doctypes_list:
+        for item in qr_code_list:
+            qr_code_field = dict(
+                fieldname=item, 
+                label=item, 
+                fieldtype='Attach Image', 
+                read_only=1, no_copy=1, hidden=1)
+            
+            create_custom_field(doctype, qr_code_field)
