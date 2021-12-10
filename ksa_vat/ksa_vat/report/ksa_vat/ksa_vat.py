@@ -25,19 +25,19 @@ def get_columns():
 			"fieldname": "amount",
 			"label": _("Amount (SAR)"),
 			"fieldtype": "Currency",
-			"width": 150,
+			"width": 200,
 		},
 		{
 			"fieldname": "adjustment_amount",
 			"label": _("Adjustment (SAR)"),
 			"fieldtype": "Currency",
-			"width": 150,
+			"width": 250,
 		},
 		{
 			"fieldname": "vat_amount",
 			"label": _("VAT Amount (SAR)"),
 			"fieldtype": "Currency",
-			"width": 150,
+			"width": 250,
 		}
 	]
 
@@ -54,7 +54,7 @@ def get_data(filters):
 	ksa_vat_setting = frappe.get_doc('KSA VAT Setting', company)
 	
 	# Sales Heading
-	append_data(data, 'VAT on Sales', '', '', '')
+	append_data(data, _('VAT on Sales'), '', '', '')
 
 	grand_total_taxable_amount = 0
 	grand_total_taxable_adjustment_amount = 0
@@ -65,7 +65,7 @@ def get_data(filters):
 			total_tax = get_tax_data_for_each_vat_setting(vat_setting, filters, 'Sales Invoice')
 		
 		# Adding results to data
-		append_data(data, vat_setting.title, total_taxable_amount, 
+		append_data(data, _(vat_setting.title), total_taxable_amount, 
 			total_taxable_adjustment_amount, total_tax)
 		
 		grand_total_taxable_amount += total_taxable_amount
@@ -73,14 +73,14 @@ def get_data(filters):
 		grand_total_tax += total_tax
 
 	# Sales Grand Total
-	append_data(data, 'Grand Total', grand_total_taxable_amount, 
+	append_data(data, _('Grand Total'), grand_total_taxable_amount, 
 		grand_total_taxable_adjustment_amount, grand_total_tax )
 	
 	# Blank Line
 	append_data(data, '', '', '', '')
 
 	# Purchase Heading
-	append_data(data, 'VAT on Purchases', '', '', '')
+	append_data(data, _('VAT on Purchases'), '', '', '')
 
 	grand_total_taxable_amount = 0
 	grand_total_taxable_adjustment_amount = 0
@@ -91,7 +91,7 @@ def get_data(filters):
 			total_tax = get_tax_data_for_each_vat_setting(vat_setting, filters, 'Purchase Invoice')
 		
 		# Adding results to data
-		append_data(data, vat_setting.title, total_taxable_amount, 
+		append_data(data, _(vat_setting.title), total_taxable_amount, 
 			total_taxable_adjustment_amount, total_tax)
 
 		grand_total_taxable_amount += total_taxable_amount
@@ -99,7 +99,7 @@ def get_data(filters):
 		grand_total_tax += total_tax
 
 	# Purchase Grand Total
-	append_data(data, 'Grand Total', grand_total_taxable_amount, 
+	append_data(data, _('Grand Total'), grand_total_taxable_amount, 
 		grand_total_taxable_adjustment_amount, grand_total_tax )
 
 	return data
@@ -141,7 +141,6 @@ def get_tax_data_for_each_vat_setting(vat_setting, filters, doctype):
 			
 			if invoice.is_return == 1:
 				total_taxable_adjustment_amount += item.net_amount
-
 			# Summing up total tax
 			total_tax += get_tax_amount(item.item_code, vat_setting.account, doctype, invoice.name)
 		
